@@ -1,6 +1,5 @@
 ---
 title: Smol Signals
-emoji: 📈
 colorFrom: green
 colorTo: blue
 sdk: gradio

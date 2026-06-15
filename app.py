@@ -42,6 +42,14 @@ _FRONTEND_DIR = Path(__file__).parent / "frontend" / "out"
 _CACHE_HEADERS = {"Cache-Control": "public, max-age=60"}
 
 
+def _server_host() -> str:
+    return os.environ.get("GRADIO_SERVER_NAME", "0.0.0.0")
+
+
+def _server_port() -> int:
+    return int(os.environ.get("GRADIO_SERVER_PORT", os.environ.get("PORT", "7860")))
+
+
 def _blocks_kwargs() -> dict:
     kwargs = {"title": "Smol Signals"}
     if "theme" in inspect.signature(gr.Blocks).parameters:
@@ -254,7 +262,13 @@ def run_status(run_id: str) -> JSONResponse:
 
 
 # Native Gradio UI + its queue/API live under /gradio.
-app = gr.mount_gradio_app(fastapi_app, demo, path="/gradio")
+app = gr.mount_gradio_app(
+    fastapi_app,
+    demo,
+    path="/gradio",
+    server_name=_server_host(),
+    server_port=_server_port(),
+)
 
 # Serve the built frontend at / (mounted LAST so /api/* and /gradio win).
 if _FRONTEND_DIR.is_dir():
@@ -272,7 +286,9 @@ else:
         })
 
 
+def _serve() -> None:
+    uvicorn.run(app, host=_server_host(), port=_server_port())
+
+
 if __name__ == "__main__":
-    host = os.environ.get("GRADIO_SERVER_NAME", "0.0.0.0")
-    port = int(os.environ.get("GRADIO_SERVER_PORT", os.environ.get("PORT", "7860")))
-    uvicorn.run(app, host=host, port=port)
+    _serve()
