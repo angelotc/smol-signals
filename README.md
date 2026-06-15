@@ -21,6 +21,10 @@ a creator reputation score.
 This repo is built as a Hugging Face Gradio Space with a custom static Next.js
 frontend served by the same Python process.
 
+## Architecture
+
+![Smol Signals architecture](Architecture2.png.png)
+
 ## What It Does
 
 1. Discovers recent videos for a YouTube channel or accepts a single video URL.
