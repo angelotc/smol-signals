@@ -142,6 +142,31 @@ def test_replay_and_stream():
     print("ok: replay + stream")
 
 
+def test_stream_heartbeat():
+    gate = threading.Event()
+    started = threading.Event()
+    _install_fake(gate=gate, started=started)
+
+    original_interval = runs._STREAM_HEARTBEAT_SEC
+    runs._STREAM_HEARTBEAT_SEC = 0.05
+    try:
+        rid = runs.start_run("@heartbeatchan")
+        assert started.wait(timeout=5), "worker should pause after first status"
+
+        gen = runs.stream(rid)
+        events = [next(gen), next(gen), next(gen)]
+        assert events[-1]["type"] == "status", f"expected heartbeat status, got {events}"
+        assert events[-1]["videos_total"] == runs.get_run(rid).videos_total
+
+        gate.set()
+        rest = list(gen)
+        assert rest and rest[-1]["type"] == "result", "stream should still finish"
+    finally:
+        runs._STREAM_HEARTBEAT_SEC = original_interval
+        gate.set()
+    print("ok: stream heartbeat")
+
+
 def test_list_active_and_prune():
     gate = threading.Event()
     started = threading.Event()
@@ -180,6 +205,7 @@ if __name__ == "__main__":
     test_sampling()
     test_dedup()
     test_replay_and_stream()
+    test_stream_heartbeat()
     test_list_active_and_prune()
     test_error_is_terminal()
     print("\nALL PASSED")

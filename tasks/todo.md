@@ -1,3 +1,13 @@
+# Todo - Space channel timeout
+
+- [ ] Confirm the deployed app is healthy but channel analysis can disappear or
+      time out during long quiet periods.
+- [ ] Add backend heartbeat/status events while a run is still active.
+- [ ] Add enough failure logging to diagnose run crashes from Space logs.
+- [ ] Tune interactive channel sample defaults through env/docs for Space
+      reliability.
+- [ ] Verify syntax, deploy the backend/config patch, and re-check Space health.
+
 # Todo - Transcript retry policy
 
 - [x] Confirm current transcript-fetch behavior and classify retryable vs.

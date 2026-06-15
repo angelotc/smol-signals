@@ -97,6 +97,8 @@ need. On Hugging Face Spaces, add the same values as Space secrets.
 | `TRANSCRIPT_FETCH_RETRY_BACKOFF` | No | Initial retry backoff in seconds, defaults to `1.5` |
 | `YOUTUBE_TRANSCRIPT_LANG` | No | Preferred transcript language, defaults to `en` |
 | `ANALYZE_CONCURRENCY` | No | Number of videos analyzed concurrently, defaults to `6` |
+| `ANALYSIS_MAX_VIDEOS` | No | Max videos sampled for an interactive channel run, defaults to `125`; Space deployment uses `25` |
+| `ANALYSIS_LATEST_VIDEOS` | No | Latest uploads always included before historical sampling, defaults to `25`; Space deployment uses `12` |
 
 ## Local Development
 

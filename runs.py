@@ -30,6 +30,7 @@ from tickers import extract_video_id
 # Finished runs linger this long so a late refresh can still fetch the result.
 _DONE_TTL = 300.0
 _TERMINAL = ("result", "error")
+_STREAM_HEARTBEAT_SEC = 15.0
 
 
 def _max_runs() -> int:
@@ -137,6 +138,7 @@ def _worker(run: Run) -> None:
             else:
                 _publish(run, {"type": kind, **payload})
     except Exception as e:  # noqa: BLE001 - surface as a terminal error event
+        print(f"[runs] {run.run_id} failed: {e}")
         _set(run, status="error", error=str(e))
         _publish(run, {"type": "error", "error": str(e)})
         terminal_published = True
@@ -146,6 +148,26 @@ def _worker(run: Run) -> None:
             # iter_analysis ended without a result (shouldn't happen) — unblock waiters.
             _set(run, status="error", error=run.error or "ended without a result")
             _publish(run, {"type": "error", "error": run.error or "ended without a result"})
+
+
+def _heartbeat(run: Run) -> dict:
+    """Current progress as a stream event, without growing the replay buffer."""
+    snap = run.snapshot()
+    return {
+        "type": "status",
+        "fraction": snap["fraction"],
+        "label": snap["label"],
+        "videos_done": snap["videos_done"],
+        "videos_total": snap["videos_total"],
+        "channel_id": snap["channel_id"],
+        "title": snap["title"],
+    }
+
+
+def _terminal_event(run: Run) -> dict:
+    if run.status == "done" and run.result is not None:
+        return {"type": "result", "result": run.result}
+    return {"type": "error", "error": run.error or "Analysis failed."}
 
 
 def _prune() -> None:
@@ -220,11 +242,16 @@ def stream(run_id: str):
                 seen_terminal = True
         while not seen_terminal:
             try:
-                event = q.get(timeout=30)
+                event = q.get(timeout=_STREAM_HEARTBEAT_SEC)
             except queue.Empty:
                 run = get_run(run_id)
-                if run is None or run.status in ("done", "error"):
+                if run is None:
+                    yield {"type": "error", "error": "Run no longer available."}
                     break
+                if run.status in ("done", "error"):
+                    yield _terminal_event(run)
+                    break
+                yield _heartbeat(run)
                 continue
             yield event
             if event.get("type") in _TERMINAL:
