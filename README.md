@@ -21,6 +21,17 @@ a creator reputation score.
 This repo is built as a Hugging Face Gradio Space with a custom static Next.js
 frontend served by the same Python process.
 
+## Why I Built This
+
+I am a casual retail investor, and I have repeatedly wondered why my personal
+portfolio has beaten the market over long stretches. A lot of my investing
+input came from finance YouTubers such as Chicken Genius Singapore and Defiant
+Gatekeeper, which raised a simple question: how do those sources actually
+compare with other YouTubers when their on-camera calls are measured against
+market performance?
+
+<img src="IMG_3587.jpg" alt="Personal portfolio performance compared with the S&P 500" width="50%">
+
 ## Architecture
 
 ![Smol Signals architecture](Architecture2.png.png)

@@ -22,3 +22,7 @@
   explicit direction from the user and the latest serving decision. Do not
   launch GPU experiments for an older SGLang objective after the thread has
   moved to a vLLM/Transformers decision without calling out the mismatch first.
+- For Hugging Face dataset visibility changes, verify the local `hf repos
+  settings --help` output before giving a command. Some installed CLI versions
+  reject `--private false`; use `update_repo_settings(..., repo_type="dataset",
+  private=False)` when the CLI path does not update an existing repo.
