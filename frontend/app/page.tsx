@@ -248,7 +248,9 @@ export default function Home() {
 
       <section className="panel">
         <h2 className="section-title">Leaderboard</h2>
-        <p className="section-sub">Channels ranked by reputation.</p>
+        <p className="section-sub">
+          Channels ranked by reputation. Scores above 50 are good; below 50 is worse.
+        </p>
         {leaderboard.length === 0 ? (
           <p className="muted" style={{ fontSize: 13 }}>
             No channels scored yet. Analyze one above to seed the board.
