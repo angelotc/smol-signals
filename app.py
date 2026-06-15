@@ -268,6 +268,7 @@ app = gr.mount_gradio_app(
     path="/gradio",
     server_name=_server_host(),
     server_port=_server_port(),
+    ssr_mode=False,
 )
 
 # Serve the built frontend at / (mounted LAST so /api/* and /gradio win).
