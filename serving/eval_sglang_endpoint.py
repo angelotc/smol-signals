@@ -12,7 +12,7 @@ import requests
 
 from signals import SIGNAL_JSON_SCHEMA
 
-REQUEST_MODEL = "small-signals-gemma-4-12b:signals"
+REQUEST_MODEL = "small-signals-gemma-4-12b-signals"
 
 
 def _signal_json_schema() -> dict[str, Any]:

@@ -26,3 +26,6 @@
   settings --help` output before giving a command. Some installed CLI versions
   reject `--private false`; use `update_repo_settings(..., repo_type="dataset",
   private=False)` when the CLI path does not update an existing repo.
+- When the user redirects a backend task to "just do evals," stop deployment or
+  cutover work and run only the requested measurements. Report raw endpoint
+  metrics separately from app-normalized metrics.

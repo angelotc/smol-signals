@@ -87,8 +87,8 @@ need. On Hugging Face Spaces, add the same values as Space secrets.
 | Variable | Required | Description |
 | --- | --- | --- |
 | `HF_TOKEN` | Yes for storage or HF fallback | Hugging Face token for Dataset writes and fallback inference |
-| `MODAL_GEMMA4_URL` | No | Preferred fine-tuned Gemma 4 endpoint, OpenAI-compatible at `/v1/chat/completions` |
-| `MODAL_GEMMA4_MODEL` | No | Modal model name, defaults to `small-signals-gemma-4-12b:signals` |
+| `MODAL_GEMMA4_URL` | No | Preferred fine-tuned Gemma 4 Modal + SGLang endpoint, OpenAI-compatible at `/v1/chat/completions` |
+| `MODAL_GEMMA4_MODEL` | No | Modal model name, defaults to `small-signals-gemma-4-12b-signals` |
 | `MODAL_GEMMA4_TIMEOUT` | No | Modal request timeout in seconds, defaults to `1200` |
 | `HF_MODEL` | No | Hugging Face fallback model when `MODAL_GEMMA4_URL` is not set |
 | `HF_BUCKET_NAME` | No | Dataset repo such as `org/small-signals`; unset means stateless storage |

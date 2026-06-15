@@ -20,7 +20,7 @@ HF_MODEL = os.environ.get("HF_MODEL", "google/gemma-3-27b-it")
 MODAL_GEMMA4_URL = os.environ.get("MODAL_GEMMA4_URL", "").rstrip("/")
 MODAL_GEMMA4_MODEL = os.environ.get(
     "MODAL_GEMMA4_MODEL",
-    "small-signals-gemma-4-12b:signals",
+    "small-signals-gemma-4-12b-signals",
 )
 DEFAULT_MODEL = MODAL_GEMMA4_MODEL if MODAL_GEMMA4_URL else HF_MODEL
 

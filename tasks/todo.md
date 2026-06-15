@@ -263,3 +263,26 @@ Notes:
 - Current decision remains unchanged: do not switch production to merged
   SGLang until it beats the Transformers endpoint on groundedness and ticker
   overlap, not just valid JSON.
+
+## Repaired merged SGLang deployed eval
+
+- Deployed the repaired merged checkpoint as a Modal SGLang endpoint:
+  `https://angelotc--smol-signals-gemma4-sglang-merged-repair-serve.modal.run`.
+  The app routing and local `.env` were not changed to use it.
+- First deployed eval attempt used the old colon model alias
+  `small-signals-gemma-4-12b:signals`; SGLang treated that as a LoRA adapter
+  request and returned 400 for every row. Re-ran with the actual served model
+  name `small-signals-gemma-4-12b-signals`.
+- Raw deployed SGLang eval on the 17-row validation set:
+  17/17 valid JSON, 16/17 grounded, 14/17 effective signal matches, and
+  5 non-NONE ticker overlaps. Output:
+  `training/output/sglang_gemma4_merged_repair_deployed_eval.json`.
+- App-normalized deployed SGLang eval:
+  17/17 valid JSON, 17/17 grounded, 15/17 effective signal matches, and
+  5 non-NONE ticker overlaps. Output:
+  `training/output/sglang_gemma4_merged_repair_deployed_eval_normalized.json`.
+- Remaining app-normalized misses are row 1
+  (`Why isn’t General Motors Bankcrupt`, target `BUY TSLA`, predicted `NONE`)
+  and row 8 (`Being successful in the stock market`, target `BUY TSLA`,
+  predicted `NONE`). Row 4's raw false positive `HOLD SPY` is removed by the
+  app quote-grounding normalizer.
