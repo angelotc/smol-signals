@@ -1,6 +1,6 @@
 ---
 title: Smol Signals
-emoji: chart_with_upwards_trend
+emoji: 📈
 colorFrom: green
 colorTo: blue
 sdk: gradio
