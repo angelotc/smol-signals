@@ -1,0 +1,5 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+# NOTE: ./out IS committed — it is what the Space serves.

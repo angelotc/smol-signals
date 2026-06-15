@@ -1,0 +1,17 @@
+{%- for message in messages %}
+{%- set role = "model" if message["role"] == "assistant" else message["role"] %}
+{{ "<|turn>" + role + "\n" }}
+{%- if message["content"] is string %}
+{{ message["content"] }}
+{%- else %}
+{%- for item in message["content"] %}
+{%- if item["type"] == "text" %}
+{{ item["text"] }}
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{{ "<turn|>\n" }}
+{%- endfor %}
+{%- if add_generation_prompt %}
+{{ "<|turn>model\n" }}
+{%- endif %}

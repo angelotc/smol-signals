@@ -1,0 +1,56 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Local runtime files
+.gradio/
+*.log
+*.pid
+
+# Frontend dependencies and build tooling
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.vercel/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+
+# Keep frontend/out/ commit-able. app.py serves that static export on Spaces.
+
+# Local and generated training artifacts
+training/data/
+training/output/
+training/checkpoints/
+training/runs/
+tmp_modal_*/
+wandb/
+mlruns/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
