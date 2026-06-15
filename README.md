@@ -7,6 +7,13 @@ sdk_version: 6.18.0
 app_file: app.py
 pinned: false
 short_description: Score finance YouTubers' stock calls with a small model
+tags:
+  - track:backyard
+  - track:wood
+  - sponsor:openai
+  - sponsor:modal
+  - achievement:welltuned
+  - achievement:offbrand
 ---
 
 # Smol Signals
